@@ -183,7 +183,7 @@ body.hudEdit #joyBase{display:block}
 .dlg-hint{animation:none!important;opacity:.8;padding-right:8px}
 
 </style>
-</head>
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0a0e1e"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Indian StickMan"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png"></head>
 <body data-screen="boot">
 
 
@@ -2688,5 +2688,12 @@ Object.assign(A, {
 window.addEventListener('DOMContentLoaded',boot);
 
 </script>
-</body>
+<script>
+if('serviceWorker' in navigator&&location.protocol.startsWith('http'))addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+let _ip=null;const _ib=document.createElement('button');_ib.textContent='📲 INSTALL GAME';_ib.style.cssText='display:none;position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:99999;padding:10px 20px;border:0;border-radius:24px;background:linear-gradient(#ffcf4a,#e08a10);color:#201400;font:700 14px sans-serif;box-shadow:0 4px 16px rgba(0,0,0,.6)';
+addEventListener('beforeinstallprompt',e=>{e.preventDefault();_ip=e;if(!matchMedia('(display-mode:standalone)').matches){document.body.appendChild(_ib);_ib.style.display='block';}});
+_ib.onclick=async()=>{if(_ip){_ip.prompt();await _ip.userChoice;_ip=null;_ib.style.display='none';}};
+addEventListener('appinstalled',()=>{_ib.style.display='none'});
+if(/iphone|ipad|ipod/i.test(navigator.userAgent)&&!navigator.standalone&&!matchMedia('(display-mode:standalone)').matches)addEventListener('load',()=>{setTimeout(()=>{_ib.textContent='iPhone: Share ⬆ → Add to Home Screen';_ib.style.display='block';document.body.appendChild(_ib);setTimeout(()=>_ib.remove(),9000)},2500)});
+</script></body>
 </html>
